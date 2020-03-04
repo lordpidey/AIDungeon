@@ -570,30 +570,48 @@ def play_aidungeon_2():
                         console_print("You make sure to remember {}.".format(" ".join(action.split(" ")[1:])))
 
                 elif command == 'retry':
-                    if len(story_manager.story.actions) > 0:
-                        last_action = story_manager.story.actions.pop()
-                        last_result = story_manager.story.results.pop()
-                        try:
-                            story_manager.act_with_timeout(last_action)
-                            console_print(last_action)
-                            console_print(story_manager.story.results[-1])
-                        except FunctionTimedOut:
-                            console_print("That input caused the model to hang (timeout is {}, use infto ## command to change)".format(story_manager.inference_timeout))
-                        except NameError:
-                            pass
-                        finally:
-                            if ping:
-                                playsound('ping.mp3')
-                    else:
-                        # Retry for another story start
-                        block = story_manager.generator.generate(story_manager.story.context + story_manager.story.story_prompt)
-                        block = cut_trailing_sentence(block)
-                        story_manager.start_new_story(
-                            story_prompt=story_manager.story.story_prompt, context=context, upload_story=upload_story
-                        )
-                        print("\n")
-                        console_print(str(story_manager.story))
-
+					if len(args) == 0:
+						if len(story_manager.story.actions) > 0:
+							last_action = story_manager.story.actions.pop()
+							story_manager.story.results.pop()
+							try:
+								story_manager.act_with_timeout(last_action, true)
+								console_print(last_action)
+								console_print(story_manager.story.results[-1])
+							except FunctionTimedOut:
+								console_print("That input caused the model to hang (timeout is {}, use infto ## command to change)".format(story_manager.inference_timeout))
+							except NameError:
+								pass
+							finally:
+								if ping:
+									playsound('ping.mp3')
+						else:
+							# Retry for another story start
+							block = story_manager.generator.generate(story_manager.story.context + story_manager.story.story_prompt)
+							block = cut_trailing_sentence(block)
+							story_manager.start_new_story(
+								story_prompt=story_manager.story.story_prompt, context=context, upload_story=upload_story
+							)
+							print("\n")
+							console_print(str(story_manager.story))
+					else:
+						rounds = int(args[0])
+						if(rounds <= 0):
+							print("Please input a positive number.\n")
+						else:
+							if len(story_manager.story.actions) > 0:
+								last_action = story_manager.story.actions.pop()
+								story_manager.story.results.pop()
+								choices = []
+								for x in range(0, rounds):
+									choices[x] = story_manager.act_with_timeout(last_action, false)
+									console_print(x + ") " + choices[x])
+								choice = get_num_options(rounds)
+								story_manager.add_to_story(last_action, choices[x])
+							else:
+								print("Not implemented for start of session.)
+						
+					
                 elif command == 'context':
                     try:
                         current_context = story_manager.get_context()
@@ -685,7 +703,7 @@ def play_aidungeon_2():
                     action = action.replace("\\n", "\n")
 
                 try:
-                    result = "\n" + story_manager.act_with_timeout(action)
+                    result = "\n" + story_manager.act_with_timeout(action, true)
                 except FunctionTimedOut:
                     console_print("That input caused the model to hang (timeout is {}, use infto ## command to change)".format(story_manager.inference_timeout))
                     if ping:
