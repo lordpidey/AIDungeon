@@ -296,7 +296,7 @@ class UnconstrainedStoryManager(StoryManager):
             else:
                 action_choice = " "
         result = self.generate_result(action_choice)
-        if(should_add_to_story)
+        if(should_add_to_story == True)
             self.story.add_to_story(action_choice, result)
         return result
 
