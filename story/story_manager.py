@@ -296,8 +296,8 @@ class UnconstrainedStoryManager(StoryManager):
             else:
                 action_choice = " "
         result = self.generate_result(action_choice)
-		if(should_add_to_story)
-			self.story.add_to_story(action_choice, result)
+        if(should_add_to_story)
+            self.story.add_to_story(action_choice, result)
         return result
 
     def act_with_timeout(self, action_choice, should_add_to_story):
