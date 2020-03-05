@@ -605,7 +605,7 @@ def play_aidungeon_2():
                                 choices = []
                                 for x in range(0, rounds):
                                     choices.append(story_manager.act_with_timeout(last_action, False))
-                                    console_print(x + ") " + choices[x])
+                                    console_print(str(x) + ") " + choices[x])
                                 choice = get_num_options(rounds)
                                 story_manager.add_to_story(last_action, choices[choice])
                             else:
