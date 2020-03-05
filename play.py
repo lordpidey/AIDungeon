@@ -575,7 +575,7 @@ def play_aidungeon_2():
                             last_action = story_manager.story.actions.pop()
                             story_manager.story.results.pop()
                             try:
-                                story_manager.act_with_timeout(last_action, true)
+                                story_manager.act_with_timeout(last_action, True)
                                 console_print(last_action)
                                 console_print(story_manager.story.results[-1])
                             except FunctionTimedOut:
@@ -604,7 +604,7 @@ def play_aidungeon_2():
                                 story_manager.story.results.pop()
                                 choices = []
                                 for x in range(0, rounds):
-                                    choices[x] = story_manager.act_with_timeout(last_action, false)
+                                    choices[x] = story_manager.act_with_timeout(last_action, False)
                                     console_print(x + ") " + choices[x])
                                 choice = get_num_options(rounds)
                                 story_manager.add_to_story(last_action, choices[x])
@@ -703,7 +703,7 @@ def play_aidungeon_2():
                     action = action.replace("\\n", "\n")
 
                 try:
-                    result = "\n" + story_manager.act_with_timeout(action, true)
+                    result = "\n" + story_manager.act_with_timeout(action, True)
                 except FunctionTimedOut:
                     console_print("That input caused the model to hang (timeout is {}, use infto ## command to change)".format(story_manager.inference_timeout))
                     if ping:
