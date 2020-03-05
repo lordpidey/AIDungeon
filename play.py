@@ -604,7 +604,10 @@ def play_aidungeon_2():
                                 story_manager.story.results.pop()
                                 choices = []
                                 for x in range(0, rounds):
-                                    choices.append(story_manager.act_with_timeout(last_action, False))
+									try:
+										choices.append(story_manager.act_with_timeout(last_action, False))
+									except FunctionTimedOut:
+										choices.append("That input caused the model to hang (timeout is {}, use infto ## command to change)".format(story_manager.inference_timeout))
                                     console_print("\n" + str(x) + ") " + choices[x])
                                 choice = get_num_options(rounds)
                                 story_manager.story.add_to_story(last_action, choices[choice])
