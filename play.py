@@ -609,7 +609,7 @@ def play_aidungeon_2():
                                 choice = get_num_options(rounds)
                                 story_manager.add_to_story(last_action, choices[x])
                             else:
-                                print("Not implemented for start of session.)
+                                print("Not implemented for start of session.")
                         
                     
                 elif command == 'context':
