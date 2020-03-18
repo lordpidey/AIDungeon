@@ -116,14 +116,14 @@ def get_custom_prompt():
         "always remember this prompt and will use it for context, ex:\n 'Your name is John Doe. You are a knight in "
         "the kingdom of Larion. You were sent by the king to track down and slay an evil dragon.'\n"
     )
-    context = input("Story Context: ")
+    context = input("Story Context: ").replace("\\n", "\n")
     if len(context) > 0 and not context.endswith(" "):
         context = context + " "
     console_print(
         "\nNow enter a prompt that describes the start of your story. This comes after the Story Context and will give the AI "
         "a starting point for the story. Unlike the context, the AI will eventually forget this prompt, ex:\n 'You enter the forest searching for the dragon and see' "
     )
-    prompt = input("Starting Prompt: ")
+    prompt = input("Starting Prompt: ").replace("\\n", "\n")
     return context, prompt
 
 
